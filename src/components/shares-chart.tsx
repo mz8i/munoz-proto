@@ -11,10 +11,10 @@ import {
 } from "@/components/chart-style"
 import type { EnergyType } from "@/components/energy-type-tabs"
 import { SeriesLegend } from "@/components/series-legend"
+import { SharesTooltip } from "@/components/shares-tooltip"
 import {
   ChartContainer,
   ChartTooltip,
-  ChartTooltipContent,
   type ChartConfig,
 } from "@/components/ui/chart"
 import { readWideSheet, seriesKey } from "@/data/wide-sheet"
@@ -75,8 +75,6 @@ const CHARTS: Record<EnergyType, ReturnType<typeof prepareChart>> = {
   useful: prepareChart(SHARES_CHART_TITLES.useful),
 }
 
-const formatPercent = (value: number) => `${value.toFixed(2)} %`
-
 export function SharesChart({ energyType }: { energyType: EnergyType }) {
   const chart = CHARTS[energyType]
 
@@ -104,14 +102,7 @@ export function SharesChart({ energyType }: { energyType: EnergyType }) {
               style: { textAnchor: "middle" },
             }}
           />
-          <ChartTooltip
-            content={
-              <ChartTooltipContent
-                labelFormatter={(_, payload) => payload[0]?.payload.year}
-                valueFormatter={formatPercent}
-              />
-            }
-          />
+          <ChartTooltip content={<SharesTooltip lines={chart.lines} />} />
           {chart.lines.map((s) => (
             <Line
               key={s.key}

@@ -19,12 +19,12 @@ import {
   GRID_COLOR,
   LINE_WIDTH,
 } from "@/components/chart-style"
+import { EnergyTooltip, type Comparison } from "@/components/energy-tooltip"
 import type { EnergyType } from "@/components/energy-type-tabs"
 import { SeriesLegend } from "@/components/series-legend"
 import {
   ChartContainer,
   ChartTooltip,
-  ChartTooltipContent,
   type ChartConfig,
 } from "@/components/ui/chart"
 import { readWideSheet, seriesKey } from "@/data/wide-sheet"
@@ -46,6 +46,20 @@ const LINE_STYLES = [
   { name: "Renewables (historical)", color: EXCEL_GREENS[0], dashed: false },
   { name: "Total (target)", color: "#000000", dashed: true },
   { name: "Total (historical)", color: EXCEL_PURPLE, dashed: false },
+]
+
+/** Target vs historical line pairs, compared side by side in the tooltip. */
+const COMPARISONS = [
+  {
+    label: "Total",
+    target: "Total (target)",
+    historical: "Total (historical)",
+  },
+  {
+    label: "Renewables",
+    target: "Renewable (target)",
+    historical: "Renewables (historical)",
+  },
 ]
 
 const X_TICKS = range(2010, 2051, 5)
@@ -82,7 +96,18 @@ function prepareChart(title: string) {
       )
     ) ?? 0
 
-  return { title, rows: sheet.rows, areas, lines, config, dataMax }
+  const lineByName = (name: string) => {
+    const line = lines.find((s) => s.name === name)
+    if (!line) throw new Error(`Line not configured: ${name}`)
+    return line
+  }
+  const comparisons: Comparison[] = COMPARISONS.map((c) => ({
+    label: c.label,
+    target: lineByName(c.target),
+    historical: lineByName(c.historical),
+  }))
+
+  return { title, rows: sheet.rows, areas, lines, comparisons, config, dataMax }
 }
 
 const CHARTS: Record<EnergyType, ReturnType<typeof prepareChart>> = {
@@ -124,8 +149,9 @@ export function EnergyChart({ energyType }: { energyType: EnergyType }) {
           />
           <ChartTooltip
             content={
-              <ChartTooltipContent
-                labelFormatter={(_, payload) => payload[0]?.payload.year}
+              <EnergyTooltip
+                comparisons={chart.comparisons}
+                areas={chart.areas}
               />
             }
           />
