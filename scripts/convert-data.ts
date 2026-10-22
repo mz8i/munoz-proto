@@ -11,7 +11,7 @@ import { mkdirSync, readFileSync, writeFileSync } from "node:fs"
 import { dirname, resolve } from "node:path"
 import * as XLSX from "xlsx"
 
-const inputPath = resolve(process.argv[2] ?? "Munoz_dataset.xlsx")
+const inputPath = resolve(process.argv[2] ?? "data/Munoz_dataset.xlsx")
 const outputPath = resolve("src/data/generated/workbook.json")
 
 type Cell = string | number | boolean | null
