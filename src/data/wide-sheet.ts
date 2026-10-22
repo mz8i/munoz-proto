@@ -31,3 +31,10 @@ export function readWideSheet(sheetName: string): WideSheet {
 
   return { series, rows }
 }
+
+/** Looks up a series' key by its display name, failing loudly if it's missing. */
+export function seriesKey(sheet: WideSheet, name: string): string {
+  const series = sheet.series.find((s) => s.name === name)
+  if (!series) throw new Error(`Series not found: ${name}`)
+  return series.key
+}
