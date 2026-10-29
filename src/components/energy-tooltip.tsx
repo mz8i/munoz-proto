@@ -61,23 +61,28 @@ export function EnergyTooltip({
           </div>
         </div>
       ))}
-      <ul className="grid gap-1.5 border-t pt-2.5">
-        {/* Reversed so the top of the stack comes first */}
-        {areas.toReversed().map((s) => {
-          const value = row[s.key]
-          return (
-            <TooltipSeriesRow
-              key={s.key}
-              swatch={<AreaSwatch color={s.color} />}
-              name={s.name}
-            >
-              {value != null && (
-                <TooltipValue value={formatNumber(value)} unit="EJ" />
-              )}
-            </TooltipSeriesRow>
-          )
-        })}
-      </ul>
+      <div className="grid gap-1.5 border-t pt-2.5">
+        <div className="font-medium text-muted-foreground">
+          IEA Net Zero scenario
+        </div>
+        <ul className="grid gap-1.5">
+          {/* Reversed so the top of the stack comes first */}
+          {areas.toReversed().map((s) => {
+            const value = row[s.key]
+            return (
+              <TooltipSeriesRow
+                key={s.key}
+                swatch={<AreaSwatch color={s.color} />}
+                name={s.name}
+              >
+                {value != null && (
+                  <TooltipValue value={formatNumber(value)} unit="EJ" />
+                )}
+              </TooltipSeriesRow>
+            )
+          })}
+        </ul>
+      </div>
     </TooltipFrame>
   )
 }

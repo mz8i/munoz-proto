@@ -14,6 +14,10 @@ export const EXCEL_PURPLE_LIGHT = "#a02b93"
 export const EXCEL_BLUE = "#156082"
 
 export const GRID_COLOR = "#cecece"
+/** Vertical year markers: subtler than the data, but darker than the grid. */
+export const MARKER_COLOR = "#8a8a8a"
+export const MARKER_DASH = "4 4"
+export const MARKER_DOT_RADIUS = 6
 export const AREA_OPACITY = 0.5
 
 export const LINE_WIDTH = 3

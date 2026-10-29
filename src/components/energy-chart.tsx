@@ -4,6 +4,8 @@ import {
   CartesianGrid,
   ComposedChart,
   Line,
+  ReferenceDot,
+  ReferenceLine,
   XAxis,
   YAxis,
 } from "recharts"
@@ -18,6 +20,9 @@ import {
   EXCEL_PURPLE,
   GRID_COLOR,
   LINE_WIDTH,
+  MARKER_COLOR,
+  MARKER_DASH,
+  MARKER_DOT_RADIUS,
 } from "@/components/chart-style"
 import { EnergyTooltip, type Comparison } from "@/components/energy-tooltip"
 import type { EnergyType } from "@/components/energy-type-tabs"
@@ -71,6 +76,16 @@ const COMPARISONS: {
   },
 ]
 
+/**
+ * Vertical lines marking target years; labels are placeholders. Where
+ * highlightTargets is set, the target (dashed) lines get a dot where they
+ * cross the marker.
+ */
+const YEAR_MARKERS = [
+  { year: 2035, label: "2035 GTE Target", highlightTargets: true },
+  { year: 2050, label: "2050 Net Zero Target", highlightTargets: false },
+]
+
 const X_TICK_STEP = 5
 const Y_STEP = 20
 
@@ -120,6 +135,20 @@ function prepareChart(energyType: EnergyType) {
   const xDomain = [sheet.years[0], sheet.years[sheet.years.length - 1]]
   const xTicks = range(xDomain[0], xDomain[1] + 1, X_TICK_STEP)
 
+  const markerDots = YEAR_MARKERS.filter((m) => m.highlightTargets).flatMap(
+    (m) => {
+      const row = sheet.rows.find((r) => r.year === m.year)
+      return lines
+        .filter((s) => s.dashed && row?.[s.key] != null)
+        .map((s) => ({
+          key: `${m.year}-${s.key}`,
+          year: m.year,
+          value: row?.[s.key] ?? 0,
+          color: s.color,
+        }))
+    }
+  )
+
   return {
     title,
     rows: sheet.rows,
@@ -130,6 +159,7 @@ function prepareChart(energyType: EnergyType) {
     dataMax,
     xDomain,
     xTicks,
+    markerDots,
   }
 }
 
@@ -190,6 +220,20 @@ export function EnergyChart({ energyType }: { energyType: EnergyType }) {
               isAnimationActive={false}
             />
           ))}
+          {YEAR_MARKERS.map((m) => (
+            <ReferenceLine
+              key={m.year}
+              x={m.year}
+              stroke={MARKER_COLOR}
+              strokeDasharray={MARKER_DASH}
+              label={{
+                value: m.label,
+                position: "insideTopRight",
+                fill: MARKER_COLOR,
+                fontSize: 12,
+              }}
+            />
+          ))}
           {chart.lines.map((s) => (
             <Line
               key={s.key}
@@ -201,6 +245,17 @@ export function EnergyChart({ energyType }: { energyType: EnergyType }) {
               strokeLinecap="round"
               dot={false}
               isAnimationActive={false}
+            />
+          ))}
+          {chart.markerDots.map((d) => (
+            <ReferenceDot
+              key={d.key}
+              x={d.year}
+              y={d.value}
+              r={MARKER_DOT_RADIUS}
+              fill={d.color}
+              stroke="#ffffff"
+              strokeWidth={2}
             />
           ))}
         </ComposedChart>
