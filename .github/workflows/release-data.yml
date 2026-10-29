@@ -1,0 +1,45 @@
+name: Release data
+
+# Publishes the files to upload to the TDC portal as a GitHub release,
+# whenever the data (or how it's converted) changes on main
+on:
+  push:
+    branches: [main]
+    paths:
+      - data/**
+      - scripts/convert-data.ts
+      - src/data/schema.ts
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: release-data
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: ./.github/actions/setup
+      - run: pnpm data
+      - name: Create release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          tag="data-$(date -u +%Y-%m-%d)-${GITHUB_SHA::7}"
+          {
+            echo "Data files for the TDC portal, converted from commit ${GITHUB_SHA::7}:"
+            echo
+            git log -1 --format='> %s'
+            echo
+            echo "- \`.xlsx\`: the source workbook, unchanged"
+            echo "- \`.csv\`: one tall table per sheet, for the TDC DataStore and preview"
+            echo
+            echo "See DATA.md for how to update the dataset on TDC."
+          } > notes.md
+          gh release create "$tag" dist-data/* \
+            --target "$GITHUB_SHA" \
+            --title "Data $(date -u +%Y-%m-%d) (${GITHUB_SHA::7})" \
+            --notes-file notes.md

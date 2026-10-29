@@ -1,0 +1,22 @@
+name: Checks
+
+# Runs on pull requests, so a data file that doesn't match the template is
+# caught before it's merged
+on:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  checks:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: ./.github/actions/setup
+      # Validates the workbook against the data template
+      - run: pnpm data
+      - run: pnpm format:check
+      - run: pnpm lint
+      - run: pnpm typecheck
+      - run: pnpm build

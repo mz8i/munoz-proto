@@ -1,6 +1,7 @@
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import type { EnergyType } from "@/data/schema"
 
-export type EnergyType = "final" | "useful"
+export type { EnergyType }
 
 const ENERGY_TYPE_LABELS: Record<EnergyType, string> = {
   final: "Final energy",

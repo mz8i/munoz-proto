@@ -7,3 +7,4 @@ pnpm-lock.yaml
 yarn.lock
 dist/
 src/data/generated/
+dist-data/

@@ -27,10 +27,11 @@ import {
   ChartTooltip,
   type ChartConfig,
 } from "@/components/ui/chart"
-import { readWideSheet, seriesKey } from "@/data/wide-sheet"
+import { readSeries, seriesKey } from "@/data/dataset"
+import type { Variable } from "@/data/schema"
 
 /** Stacked areas, in order from bottom to top. */
-const AREA_STYLES = [
+const AREA_STYLES: { name: Variable<"energy">; color: string }[] = [
   { name: "Other", color: EXCEL_GREENS[1] },
   { name: "Electricity", color: EXCEL_GREENS[2] },
   { name: "Biofuels", color: EXCEL_GREENS[3] },
@@ -41,7 +42,11 @@ const AREA_STYLES = [
 ]
 
 /** Historical series end where the data does, as their later values are null. */
-const LINE_STYLES = [
+const LINE_STYLES: {
+  name: Variable<"energy">
+  color: string
+  dashed: boolean
+}[] = [
   { name: "Renewable (target)", color: EXCEL_GREENS[0], dashed: true },
   { name: "Renewables (historical)", color: EXCEL_GREENS[0], dashed: false },
   { name: "Total (target)", color: "#000000", dashed: true },
@@ -49,7 +54,11 @@ const LINE_STYLES = [
 ]
 
 /** Target vs historical line pairs, compared side by side in the tooltip. */
-const COMPARISONS = [
+const COMPARISONS: {
+  label: string
+  target: Variable<"energy">
+  historical: Variable<"energy">
+}[] = [
   {
     label: "Total",
     target: "Total (target)",
@@ -62,18 +71,19 @@ const COMPARISONS = [
   },
 ]
 
-const X_TICKS = range(2010, 2051, 5)
+const X_TICK_STEP = 5
 const Y_STEP = 20
 
-/** Chart titles, which are also the source sheet names. */
+/** Chart titles. */
 export const ENERGY_CHART_TITLES: Record<EnergyType, string> = {
   final: "Final energy consumption",
   useful: "Useful energy consumption",
 }
 
-/** Prepares one sheet for the chart: series keys, chart config and data maximum. */
-function prepareChart(title: string) {
-  const sheet = readWideSheet(title)
+/** Prepares one energy type for the chart: series keys, chart config and data maximum. */
+function prepareChart(energyType: EnergyType) {
+  const title = ENERGY_CHART_TITLES[energyType]
+  const sheet = readSeries("energy", energyType)
   const areas = AREA_STYLES.map((s) => ({
     ...s,
     key: seriesKey(sheet, s.name),
@@ -96,7 +106,7 @@ function prepareChart(title: string) {
       )
     ) ?? 0
 
-  const lineByName = (name: string) => {
+  const lineByName = (name: Variable<"energy">) => {
     const line = lines.find((s) => s.name === name)
     if (!line) throw new Error(`Line not configured: ${name}`)
     return line
@@ -107,12 +117,25 @@ function prepareChart(title: string) {
     historical: lineByName(c.historical),
   }))
 
-  return { title, rows: sheet.rows, areas, lines, comparisons, config, dataMax }
+  const xDomain = [sheet.years[0], sheet.years[sheet.years.length - 1]]
+  const xTicks = range(xDomain[0], xDomain[1] + 1, X_TICK_STEP)
+
+  return {
+    title,
+    rows: sheet.rows,
+    areas,
+    lines,
+    comparisons,
+    config,
+    dataMax,
+    xDomain,
+    xTicks,
+  }
 }
 
 const CHARTS: Record<EnergyType, ReturnType<typeof prepareChart>> = {
-  final: prepareChart(ENERGY_CHART_TITLES.final),
-  useful: prepareChart(ENERGY_CHART_TITLES.useful),
+  final: prepareChart("final"),
+  useful: prepareChart("useful"),
 }
 
 // The y-axis range is shared by all charts, so switching between them keeps the scale
@@ -132,8 +155,8 @@ export function EnergyChart({ energyType }: { energyType: EnergyType }) {
           <XAxis
             dataKey="year"
             type="number"
-            domain={[2010, 2050]}
-            ticks={X_TICKS}
+            domain={chart.xDomain}
+            ticks={chart.xTicks}
             tickLine={false}
           />
           <YAxis

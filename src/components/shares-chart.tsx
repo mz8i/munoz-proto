@@ -17,9 +17,10 @@ import {
   ChartTooltip,
   type ChartConfig,
 } from "@/components/ui/chart"
-import { readWideSheet, seriesKey } from "@/data/wide-sheet"
+import { readSeries, seriesKey } from "@/data/dataset"
+import type { Variable } from "@/data/schema"
 
-const LINE_STYLES = [
+const LINE_STYLES: { name: Variable<"shares">; color: string }[] = [
   {
     name: "Aviation and shipping fuels certified as sustainable in all renewable fuels",
     color: EXCEL_PURPLE_LIGHT,
@@ -31,19 +32,20 @@ const LINE_STYLES = [
   },
 ]
 
-const X_TICKS = range(2010, 2036, 2)
+const X_TICK_STEP = 2
 /** In percentage points. */
 const Y_STEP = 0.5
 
-/** Chart titles, which are also the source sheet names. */
+/** Chart titles. */
 export const SHARES_CHART_TITLES: Record<EnergyType, string> = {
   final: "Shares of final energy",
   useful: "Shares of useful energy",
 }
 
-/** Prepares one sheet for the chart: series keys, chart config and y-axis scale. */
-function prepareChart(title: string) {
-  const sheet = readWideSheet(title)
+/** Prepares one energy type for the chart: series keys, chart config and axis scales. */
+function prepareChart(energyType: EnergyType) {
+  const title = SHARES_CHART_TITLES[energyType]
+  const sheet = readSeries("shares", energyType)
   const lines = LINE_STYLES.map((s) => ({
     ...s,
     key: seriesKey(sheet, s.name),
@@ -67,12 +69,15 @@ function prepareChart(title: string) {
   const yMax = Math.ceil(dataMax / Y_STEP) * Y_STEP
   const yTicks = range(0, yMax + Y_STEP / 2, Y_STEP)
 
-  return { title, rows, lines, config, yMax, yTicks }
+  const xDomain = [sheet.years[0], sheet.years[sheet.years.length - 1]]
+  const xTicks = range(xDomain[0], xDomain[1] + 1, X_TICK_STEP)
+
+  return { title, rows, lines, config, yMax, yTicks, xDomain, xTicks }
 }
 
 const CHARTS: Record<EnergyType, ReturnType<typeof prepareChart>> = {
-  final: prepareChart(SHARES_CHART_TITLES.final),
-  useful: prepareChart(SHARES_CHART_TITLES.useful),
+  final: prepareChart("final"),
+  useful: prepareChart("useful"),
 }
 
 export function SharesChart({ energyType }: { energyType: EnergyType }) {
@@ -86,8 +91,8 @@ export function SharesChart({ energyType }: { energyType: EnergyType }) {
           <XAxis
             dataKey="year"
             type="number"
-            domain={[2010, 2035]}
-            ticks={X_TICKS}
+            domain={chart.xDomain}
+            ticks={chart.xTicks}
             tickLine={false}
           />
           <YAxis
