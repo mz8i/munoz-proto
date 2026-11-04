@@ -58,10 +58,7 @@ export function EnergyTypeTabs({
     if (event.pointerType !== "mouse") return
     clearTimeout(hoverTimer.current)
     if (!infoOpen || !openedOnHover) return
-    hoverTimer.current = setTimeout(() => {
-      setOpenedOnHover(false)
-      setInfoOpen(false)
-    }, HOVER_CLOSE_DELAY)
+    hoverTimer.current = setTimeout(() => setInfoOpen(false), HOVER_CLOSE_DELAY)
   }
 
   return (
@@ -88,7 +85,8 @@ export function EnergyTypeTabs({
         open={infoOpen}
         openedOnHover={openedOnHover}
         onOpenChange={(open) => {
-          setOpenedOnHover(false)
+          // Kept when closing, as it also decides where the focus goes then
+          if (open) setOpenedOnHover(false)
           setInfoOpen(open)
         }}
         onHoverStart={onHoverStart}
