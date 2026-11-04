@@ -77,13 +77,12 @@ const COMPARISONS: {
 ]
 
 /**
- * Vertical lines marking target years; labels are placeholders. Where
- * highlightTargets is set, the target (dashed) lines get a dot where they
- * cross the marker.
+ * Vertical lines marking key years. Where highlightTargets is set, the target
+ * (dashed) lines get a dot where they cross the marker.
  */
 const YEAR_MARKERS = [
   { year: 2035, label: "2035 GTE Target", highlightTargets: true },
-  { year: 2050, label: "2050 Net Zero Target", highlightTargets: false },
+  { year: 2050, label: "2050 Net Zero Pathway", highlightTargets: false },
 ]
 
 const X_TICK_STEP = 5
@@ -91,13 +90,19 @@ const Y_STEP = 20
 
 /** Chart titles. */
 export const ENERGY_CHART_TITLES: Record<EnergyType, string> = {
-  final: "Final energy consumption",
-  useful: "Useful energy consumption",
+  final: "Global Transport Effort: final energy consumption",
+  useful: "Global Transport Effort: useful energy consumption",
+}
+
+/** Shorter than the chart titles, to fit along the y-axis. */
+const Y_AXIS_LABELS: Record<EnergyType, string> = {
+  final: "Final energy consumption [EJ]",
+  useful: "Useful energy consumption [EJ]",
 }
 
 /** Prepares one energy type for the chart: series keys, chart config and data maximum. */
 function prepareChart(energyType: EnergyType) {
-  const title = ENERGY_CHART_TITLES[energyType]
+  const yAxisLabel = Y_AXIS_LABELS[energyType]
   const sheet = readSeries("energy", energyType)
   const areas = AREA_STYLES.map((s) => ({
     ...s,
@@ -150,7 +155,7 @@ function prepareChart(energyType: EnergyType) {
   )
 
   return {
-    title,
+    yAxisLabel,
     rows: sheet.rows,
     areas,
     lines,
@@ -194,7 +199,7 @@ export function EnergyChart({ energyType }: { energyType: EnergyType }) {
             ticks={Y_TICKS}
             tickLine={false}
             label={{
-              value: `${chart.title} [EJ]`,
+              value: chart.yAxisLabel,
               angle: -90,
               position: "insideLeft",
               style: { textAnchor: "middle" },
