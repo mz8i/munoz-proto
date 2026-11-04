@@ -85,7 +85,7 @@ function ChartSection({
   return (
     <section className="flex flex-col gap-6">
       <div className="flex flex-col gap-3">
-        <div className="flex flex-wrap items-center justify-between gap-x-6 gap-y-3">
+        <div className="grid gap-x-6 gap-y-3 sm:grid-cols-[minmax(0,1fr)_auto] sm:items-start">
           <h2 className="font-heading text-xl font-semibold tracking-tight">
             {title}
           </h2>

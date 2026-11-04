@@ -8,6 +8,7 @@ import {
   EXCEL_PURPLE_LIGHT,
   GRID_COLOR,
   LINE_WIDTH,
+  TOOLTIP_WRAPPER_STYLE,
 } from "@/components/chart-style"
 import type { EnergyType } from "@/components/energy-type-tabs"
 import { SeriesLegend } from "@/components/series-legend"
@@ -107,7 +108,10 @@ export function SharesChart({ energyType }: { energyType: EnergyType }) {
               style: { textAnchor: "middle" },
             }}
           />
-          <ChartTooltip content={<SharesTooltip lines={chart.lines} />} />
+          <ChartTooltip
+            wrapperStyle={TOOLTIP_WRAPPER_STYLE}
+            content={<SharesTooltip lines={chart.lines} />}
+          />
           {chart.lines.map((s) => (
             <Line
               key={s.key}

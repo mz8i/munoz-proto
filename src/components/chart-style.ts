@@ -26,3 +26,6 @@ export const DASH = "8 12"
 export const LEGEND_DASH = "6 4"
 
 export const CHART_MARGIN = { left: 12, right: 24 }
+
+// Tooltips can extend past the chart, and need to stay above the legend below it
+export const TOOLTIP_WRAPPER_STYLE = { zIndex: 10 }

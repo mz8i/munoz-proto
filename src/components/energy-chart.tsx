@@ -6,6 +6,8 @@ import {
   Line,
   ReferenceDot,
   ReferenceLine,
+  Text,
+  usePlotArea,
   XAxis,
   YAxis,
 } from "recharts"
@@ -23,6 +25,7 @@ import {
   MARKER_COLOR,
   MARKER_DASH,
   MARKER_DOT_RADIUS,
+  TOOLTIP_WRAPPER_STYLE,
 } from "@/components/chart-style"
 import { EnergyTooltip, type Comparison } from "@/components/energy-tooltip"
 import type { EnergyType } from "@/components/energy-type-tabs"
@@ -84,6 +87,10 @@ const YEAR_MARKERS = [
   { year: 2035, label: "2035 GTE Target", highlightTargets: true },
   { year: 2050, label: "2050 Net Zero Pathway", highlightTargets: false },
 ]
+
+/** Labels wrap to fit between neighbouring markers, this many years apart. */
+const MARKER_LABEL_YEARS = 15
+const MARKER_LABEL_PADDING = 6
 
 const X_TICK_STEP = 5
 const Y_STEP = 20
@@ -206,6 +213,7 @@ export function EnergyChart({ energyType }: { energyType: EnergyType }) {
             }}
           />
           <ChartTooltip
+            wrapperStyle={TOOLTIP_WRAPPER_STYLE}
             content={
               <EnergyTooltip
                 comparisons={chart.comparisons}
@@ -231,12 +239,14 @@ export function EnergyChart({ energyType }: { energyType: EnergyType }) {
               x={m.year}
               stroke={MARKER_COLOR}
               strokeDasharray={MARKER_DASH}
-              label={{
-                value: m.label,
-                position: "insideTopRight",
-                fill: MARKER_COLOR,
-                fontSize: 12,
-              }}
+              label={
+                <MarkerLabel
+                  value={m.label}
+                  widthFraction={
+                    MARKER_LABEL_YEARS / (chart.xDomain[1] - chart.xDomain[0])
+                  }
+                />
+              }
             />
           ))}
           {chart.lines.map((s) => (
@@ -267,5 +277,39 @@ export function EnergyChart({ energyType }: { energyType: EnergyType }) {
       </ChartContainer>
       <SeriesLegend areas={chart.areas} lines={chart.lines} />
     </div>
+  )
+}
+
+/** A year marker's label, right-aligned to its line and wrapping to fit. */
+function MarkerLabel({
+  value,
+  widthFraction,
+  viewBox,
+}: {
+  value: string
+  /** Space available for the label, as a fraction of the plot's width. */
+  widthFraction: number
+  /** Passed in by Recharts: the marker line's position. */
+  viewBox?: { x?: number; y?: number }
+}) {
+  const plotArea = usePlotArea()
+  if (!plotArea || viewBox?.x === undefined || viewBox.y === undefined) {
+    return null
+  }
+
+  return (
+    <Text
+      x={viewBox.x - MARKER_LABEL_PADDING}
+      y={viewBox.y + MARKER_LABEL_PADDING}
+      width={plotArea.width * widthFraction - 2 * MARKER_LABEL_PADDING}
+      textAnchor="end"
+      verticalAnchor="start"
+      lineHeight="1.2em"
+      fill={MARKER_COLOR}
+      // A style with a unit, as that's what the word wrapping measures with
+      style={{ fontSize: "12px" }}
+    >
+      {value}
+    </Text>
   )
 }
