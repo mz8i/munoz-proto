@@ -2,7 +2,8 @@
  * Validates the source workbook against the data template (src/data/schema.ts)
  * and converts it into:
  *
- * - src/data/generated/dataset.json, read by the app
+ * - src/data/generated/dataset.json, read by the app, with only the regions
+ *   it shows
  * - dist-data/, the files to publish on the TDC portal: the workbook itself,
  *   plus one tall CSV per sheet (one row per energy type, region, variable
  *   and year; empty and #N/A cells are left out)
@@ -25,6 +26,7 @@ import * as XLSX from "xlsx"
 import {
   ENERGY_TYPES,
   ID_COLUMNS,
+  REGIONS,
   SHEETS,
   type Dataset,
   type SeriesRow,
@@ -148,10 +150,24 @@ function readSheet(id: SheetId): SheetData {
   return { years, rows }
 }
 
-/** Every region needs each of the template's variables, for every energy type. */
+/**
+ * The regions shown on the page must be there, and every region needs each of
+ * the template's variables, for every energy type.
+ */
 function checkCompleteness(spec: (typeof SHEETS)[SheetId], rows: SeriesRow[]) {
   const required: readonly string[] = spec.variables
   const regions = [...new Set(rows.map((row) => row.region))]
+  const shownRegions: string[] = Object.values(REGIONS)
+  const missingRegions = shownRegions.filter((r) => !regions.includes(r))
+  if (missingRegions.length > 0) {
+    errors.push(`${spec.name} is missing regions: ${quoteAll(missingRegions)}`)
+  }
+  const otherRegions = regions.filter((r) => !shownRegions.includes(r))
+  if (otherRegions.length > 0) {
+    warnings.push(
+      `${spec.name}: regions not shown on the page: ${quoteAll(otherRegions)}`
+    )
+  }
   for (const region of regions) {
     for (const energyType of Object.values(ENERGY_TYPES)) {
       const present = new Set(
@@ -220,11 +236,21 @@ function quoteAll(names: string[]) {
 }
 
 function writeAppData(data: Dataset) {
+  const shownRegions: string[] = Object.values(REGIONS)
+  const appData = Object.fromEntries(
+    Object.entries(data).map(([id, sheet]) => [
+      id,
+      {
+        ...sheet,
+        rows: sheet.rows.filter((row) => shownRegions.includes(row.region)),
+      },
+    ])
+  )
   rmSync(appOutputDir, { recursive: true, force: true })
   mkdirSync(appOutputDir, { recursive: true })
   writeFileSync(
     join(appOutputDir, "dataset.json"),
-    JSON.stringify(data, null, 2) + "\n"
+    JSON.stringify(appData, null, 2) + "\n"
   )
 }
 

@@ -1,4 +1,4 @@
-import type { EnergyType } from "@/data/schema"
+import type { EnergyType, Region } from "@/data/schema"
 
 /**
  * The page's text, kept apart from the layout so the wording can be updated
@@ -28,21 +28,66 @@ export const ENERGY_TYPE_EXPLANATION = {
   ],
 }
 
+/** Switches between the whole world and the countries that have signed the Declaration. */
+export const REGION_LABELS: Record<Region, string> = {
+  global: "Global",
+  signatories: "Signatory countries",
+}
+
+/** Explains the region switch, listing the countries that have signed. */
+export const REGION_EXPLANATION = {
+  title: "Global vs signatory countries",
+  global: "Global shows transport energy use across all countries.",
+  signatories:
+    "Signatory countries shows the combined transport energy use of the countries that have signed the Declaration so far:",
+  signatoryCountries: [
+    "Austria",
+    "Brazil",
+    "Chile",
+    "Colombia",
+    "Costa Rica",
+    "Dominican Republic",
+    "Honduras",
+    "Norway",
+    "Portugal",
+    "Slovenia",
+    "Spain",
+    "[to be confirmed]",
+  ],
+}
+
+/** One description per chart, region and energy type. */
 export const CHART_DESCRIPTIONS: Record<
   "energy" | "shares",
-  Record<EnergyType, string>
+  Record<Region, Record<EnergyType, string>>
 > = {
   energy: {
-    final:
-      "The stacked areas show the IEA Net Zero pathway for transport’s final energy consumption by energy carrier, from 2010 to 2050. The lines compare the pathway for total and renewable energy with the historical figures reported so far, and the markers show the Global Transport Effort for 2035. The gap between the historical and pathway lines shows the distance still to cover to get on track.",
-    useful:
-      "The stacked areas show transport’s useful energy consumption by energy carrier, from 2010 to 2050, implied by the IEA Net Zero pathway, calculated following the methodology outlined in the GIZ report Tracking Global Progress on Cleaner Transport. The lines compare the pathway for total and renewable useful energy with historical estimates, and the markers show the Global Transport Effort for 2035. The gap between the historical and pathway lines shows the distance still to cover to get on track.",
+    global: {
+      final:
+        "The stacked areas show the IEA Net Zero pathway for transport’s final energy consumption by energy carrier, from 2010 to 2050. The lines compare the pathway for total and renewable energy with the historical figures reported so far, and the markers show the Global Transport Effort for 2035. The gap between the historical and pathway lines shows the distance still to cover to get on track.",
+      useful:
+        "The stacked areas show transport’s useful energy consumption by energy carrier, from 2010 to 2050, implied by the IEA Net Zero pathway, calculated following the methodology outlined in the GIZ report Tracking Global Progress on Cleaner Transport. The lines compare the pathway for total and renewable useful energy with historical estimates, and the markers show the Global Transport Effort for 2035. The gap between the historical and pathway lines shows the distance still to cover to get on track.",
+    },
+    signatories: {
+      final:
+        "The stacked areas show the IEA Net Zero pathway for transport’s final energy consumption by energy carrier, from 2010 to 2050. The lines compare the pathway for total and renewable energy with the historical figures reported so far, and the markers show the Global Transport Effort for 2035. The gap between the historical and pathway lines shows the distance still to cover to get on track.",
+      useful:
+        "The stacked areas show transport’s useful energy consumption by energy carrier, from 2010 to 2050, implied by the IEA Net Zero pathway, calculated following the methodology outlined in the GIZ report Tracking Global Progress on Cleaner Transport. The lines compare the pathway for total and renewable useful energy with historical estimates, and the markers show the Global Transport Effort for 2035. The gap between the historical and pathway lines shows the distance still to cover to get on track.",
+    },
   },
   shares: {
-    final:
-      "The lines show three indicators of how transport’s final energy mix is changing over time. They track the role of electricity in the transport energy mix, the part of it that is renewable, and the uptake of fuels that are certified as sustainable according to internationally agreed criteria (currently only defined for aviation). All three are shown as a percentage of the relevant total.",
-    useful:
-      "The lines show three indicators of how transport’s useful energy mix is changing over time. They track the role of electricity in the transport energy mix, the part of it that is renewable, and the uptake of fuels that are certified as sustainable according to internationally agreed criteria (currently only defined for aviation). All three are shown as a percentage of the relevant total. Higher shares of electricity, in comparison with final energy shares, reflect better conversion efficiency for electric powertrains in comparison with combustion.",
+    global: {
+      final:
+        "The lines show three indicators of how transport’s final energy mix is changing over time. They track the role of electricity in the transport energy mix, the part of it that is renewable, and the uptake of fuels that are certified as sustainable according to internationally agreed criteria (currently only defined for aviation). All three are shown as a percentage of the relevant total.",
+      useful:
+        "The lines show three indicators of how transport’s useful energy mix is changing over time. They track the role of electricity in the transport energy mix, the part of it that is renewable, and the uptake of fuels that are certified as sustainable according to internationally agreed criteria (currently only defined for aviation). All three are shown as a percentage of the relevant total. Higher shares of electricity, in comparison with final energy shares, reflect better conversion efficiency for electric powertrains in comparison with combustion.",
+    },
+    signatories: {
+      final:
+        "The lines show three indicators of how transport’s final energy mix is changing over time. They track the role of electricity in the transport energy mix, the part of it that is renewable, and the uptake of fuels that are certified as sustainable according to internationally agreed criteria (currently only defined for aviation). All three are shown as a percentage of the relevant total.",
+      useful:
+        "The lines show three indicators of how transport’s useful energy mix is changing over time. They track the role of electricity in the transport energy mix, the part of it that is renewable, and the uptake of fuels that are certified as sustainable according to internationally agreed criteria (currently only defined for aviation). All three are shown as a percentage of the relevant total. Higher shares of electricity, in comparison with final energy shares, reflect better conversion efficiency for electric powertrains in comparison with combustion.",
+    },
   },
 }
 

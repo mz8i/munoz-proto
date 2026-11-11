@@ -14,6 +14,15 @@ export const ID_COLUMNS = ["Energy type", "Region", "Variable"] as const
 /** Energy type values as written in the workbook, by the app's own key. */
 export const ENERGY_TYPES = { final: "Final", useful: "Useful" } as const
 
+/**
+ * Regions shown on the page, as written in the workbook, by the app's own key.
+ * Other regions in the workbook are validated but left out of the app.
+ */
+export const REGIONS = {
+  global: "Global",
+  signatories: "Current signatory countries",
+} as const
+
 export const SHEETS = {
   energy: {
     name: "Energy consumption",
@@ -28,7 +37,7 @@ export const SHEETS = {
       "Oil",
       "Natural gas",
       "Total (target)",
-      "Renewable (target)",
+      "Renewables (target)",
       "Renewables (historical)",
       "Total (historical)",
     ],
@@ -52,6 +61,7 @@ export const SHEETS = {
 
 export type SheetId = keyof typeof SHEETS
 export type EnergyType = keyof typeof ENERGY_TYPES
+export type Region = keyof typeof REGIONS
 export type Variable<S extends SheetId> =
   (typeof SHEETS)[S]["variables"][number]
 

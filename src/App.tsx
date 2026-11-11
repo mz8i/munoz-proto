@@ -2,6 +2,7 @@ import { useState, type ReactNode } from "react"
 
 import { ENERGY_CHART_TITLES, EnergyChart } from "@/components/energy-chart"
 import { EnergyTypeTabs, type EnergyType } from "@/components/energy-type-tabs"
+import { RegionTabs, type Region } from "@/components/region-tabs"
 import { SHARES_CHART_TITLES, SharesChart } from "@/components/shares-chart"
 import gteLogo from "@/assets/gte-logo.png"
 import tdcLogo from "@/assets/tdc-logo.svg"
@@ -18,11 +19,15 @@ const SECTION_HEADING_CLASS =
   "font-heading text-2xl font-bold tracking-tight text-primary"
 
 export function App() {
-  // Shared by all charts; each chart has its own switch so one is always in view
+  // Shared by all charts; each chart has its own switches so they're always in view
   const [energyType, setEnergyType] = useState<EnergyType>("final")
+  const [region, setRegion] = useState<Region>("global")
 
-  const energyTypeTabs = (
-    <EnergyTypeTabs value={energyType} onValueChange={setEnergyType} />
+  const controls = (
+    <div className="flex flex-col items-start gap-2 sm:items-end">
+      <EnergyTypeTabs value={energyType} onValueChange={setEnergyType} />
+      <RegionTabs value={region} onValueChange={setRegion} />
+    </div>
   )
 
   return (
@@ -41,17 +46,17 @@ export function App() {
       </header>
       <ChartSection
         title={ENERGY_CHART_TITLES[energyType]}
-        description={CHART_DESCRIPTIONS.energy[energyType]}
-        controls={energyTypeTabs}
+        description={CHART_DESCRIPTIONS.energy[region][energyType]}
+        controls={controls}
       >
-        <EnergyChart energyType={energyType} />
+        <EnergyChart region={region} energyType={energyType} />
       </ChartSection>
       <ChartSection
         title={SHARES_CHART_TITLES[energyType]}
-        description={CHART_DESCRIPTIONS.shares[energyType]}
-        controls={energyTypeTabs}
+        description={CHART_DESCRIPTIONS.shares[region][energyType]}
+        controls={controls}
       >
-        <SharesChart energyType={energyType} />
+        <SharesChart region={region} energyType={energyType} />
       </ChartSection>
       <About />
     </main>

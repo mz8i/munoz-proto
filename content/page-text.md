@@ -1,43 +1,36 @@
 # Page text
 
-All the text on the tracker page, in the order it appears. Edit the text under each heading; the notes in quotes (starting with **Note**) explain where the text appears and roughly how long it should be.
-
-Status of each piece:
-
-- **Placeholder**: made-up text, only there to show the length. Please replace.
-- **Draft**: written as a starting point. Please check and edit.
-- **From the researchers**: already provided. Edit only if it needs changing.
-- **Confirmed**: confirmed as the version to go live for COP.
+All the text on the tracker page, in the order it appears. Edit the text under each heading; the notes (starting with **Note**) explain where the text appears.
 
 Series names in the chart legends and tooltips (e.g. "Oil", "Total (target)") come from the data file, so they're not listed here.
 
 ## Page heading
 
-> **Note**: the main heading at the top of the page, also used as the title of the browser tab. Confirmed.
+> **Note**: the main heading at the top of the page, also used as the title of the browser tab.
 
 Tracking the Global Transport Effort
 
 ## Subtitle
 
-> **Note**: shown below the heading. Confirmed.
+> **Note**: shown below the heading.
 
 Declaration “Towards Resilient and Low-Emission Transport Systems for People, Development and the Planet”
 
 ## Introduction
 
-> **Note**: shown below the subtitle. Confirmed.
+> **Note**: shown below the subtitle.
 
 This tracker follows global progress in transport energy use against the pathway defined in the IEA’s Net Zero Roadmap (2023) to meet the Paris Agreement’s 1.5 °C goal. Based on this pathway, the Declaration sets out the Global Transport Effort for 2035. It has been signed by 11 countries: Austria, Brazil, Chile, Colombia, Costa Rica, the Dominican Republic, Honduras, Norway, Portugal, Slovenia and Spain. The tracker compares the latest historical data with this 2035 effort and the pathway’s 2050 values, for both the total energy consumed by transport and the share of it coming from renewable sources. The data is updated every year as new figures become available.
 
 ## Global Transport Effort definition
 
-> **Note**: the last paragraph of the introduction, set apart with a line on its left. From the researchers. Confirmed.
+> **Note**: the last paragraph of the introduction, set apart in a box with the GTE logo.
 
 The Global Transport Effort (GTE) means achieving globally by 2035 a quarter drop in overall energy demand and shifting to one-third sustainable biofuels and renewable sources, considering that each country’s contributions to this global effort will reflect its national circumstances.
 
 ## Final vs useful energy
 
-> **Note**: a pop-up opened from the info button next to the Final energy / Useful energy switch, above each chart. It explains the difference once, so the chart descriptions below don't need to. Confirmed.
+> **Note**: a pop-up opened from the info button next to the Final energy / Useful energy switch, above each chart. It explains the difference once, so the chart descriptions below don't need to.
 
 ### Title
 
@@ -54,37 +47,85 @@ Useful energy is the kinetic energy needed to actually move people and goods, af
 - Final energy
 - Useful energy
 
+## Global vs signatory countries
+
+> **Note**: a pop-up opened from the info button next to the Global / Signatory countries switch, below the Final energy / Useful energy switch above each chart.
+
+### Title
+
+Global vs signatory countries
+
+### Text
+
+Global shows transport energy use across all countries.
+
+Signatory countries shows the combined transport energy use of the countries that have signed the Declaration so far:
+
+### Signatory countries
+
+> **Note**: listed in two columns below the text above. Please complete the list.
+
+- Austria
+- Brazil
+- Chile
+- Colombia
+- Costa Rica
+- Dominican Republic
+- Honduras
+- Norway
+- Portugal
+- Slovenia
+- Spain
+- [to be confirmed]
+
+### Switch labels
+
+- Global
+- Signatory countries
+
 ## Chart 1: Energy consumption
 
 ### Chart titles
 
-> **Note**: the chart's heading changes with the Final / Useful switch. Confirmed.
+> **Note**: the chart's heading changes with the Final / Useful switch, and is the same for both regions.
 
 - Final: Global Transport Effort: final energy consumption
 - Useful: Global Transport Effort: useful energy consumption
 
-### Description: final energy
+### Description: final energy, global
 
-> **Note**: shown between the chart's heading and the chart, when Final energy is selected. Confirmed.
+> **Note**: shown between the chart's heading and the chart, when Final energy and Global are selected.
 
 The stacked areas show the IEA Net Zero pathway for transport’s final energy consumption by energy carrier, from 2010 to 2050. The lines compare the pathway for total and renewable energy with the historical figures reported so far, and the markers show the Global Transport Effort for 2035. The gap between the historical and pathway lines shows the distance still to cover to get on track.
 
-### Description: useful energy
+### Description: final energy, signatory countries
 
-> **Note**: as above, when Useful energy is selected. Confirmed.
+> **Note**: as above, when Final energy and Signatory countries are selected. For now the same as for Global; change it if the signatory countries need a different description.
+
+The stacked areas show the IEA Net Zero pathway for transport’s final energy consumption by energy carrier, from 2010 to 2050. The lines compare the pathway for total and renewable energy with the historical figures reported so far, and the markers show the Global Transport Effort for 2035. The gap between the historical and pathway lines shows the distance still to cover to get on track.
+
+### Description: useful energy, global
+
+> **Note**: as above, when Useful energy and Global are selected.
+
+The stacked areas show transport’s useful energy consumption by energy carrier, from 2010 to 2050, implied by the IEA Net Zero pathway, calculated following the methodology outlined in the GIZ report Tracking Global Progress on Cleaner Transport. The lines compare the pathway for total and renewable useful energy with historical estimates, and the markers show the Global Transport Effort for 2035. The gap between the historical and pathway lines shows the distance still to cover to get on track.
+
+### Description: useful energy, signatory countries
+
+> **Note**: as above, when Useful energy and Signatory countries are selected. For now the same as for Global.
 
 The stacked areas show transport’s useful energy consumption by energy carrier, from 2010 to 2050, implied by the IEA Net Zero pathway, calculated following the methodology outlined in the GIZ report Tracking Global Progress on Cleaner Transport. The lines compare the pathway for total and renewable useful energy with historical estimates, and the markers show the Global Transport Effort for 2035. The gap between the historical and pathway lines shows the distance still to cover to get on track.
 
 ### Year markers
 
-> **Note**: labels on the dashed vertical lines in the chart. Keep them short, as they sit at the top of the chart. Confirmed.
+> **Note**: labels on the dashed vertical lines in the chart. Keep them short, as they sit at the top of the chart.
 
 - 2035: 2035 GTE Target
 - 2050: 2050 Net Zero Pathway
 
 ### Tooltip headings
 
-> **Note**: the box that appears when hovering over the chart. It compares target and historical values, then lists the energy carriers. Draft.
+> **Note**: the box that appears when hovering over the chart. It compares target and historical values, then lists the energy carriers.
 
 - Comparison headings: Total, Renewables
 - Comparison columns: Target, Historical
@@ -94,32 +135,44 @@ The stacked areas show transport’s useful energy consumption by energy carrier
 
 ### Chart titles
 
-> **Note**: the chart's heading changes with the Final / Useful switch. Draft.
+> **Note**: the chart's heading changes with the Final / Useful switch, and is the same for both regions.
 
 - Final: Shares of final energy
 - Useful: Shares of useful energy
 
-### Description: final energy
+### Description: final energy, global
 
-> **Note**: shown between the chart's heading and the chart, when Final energy is selected. Confirmed.
+> **Note**: shown between the chart's heading and the chart, when Final energy and Global are selected.
 
 The lines show three indicators of how transport’s final energy mix is changing over time. They track the role of electricity in the transport energy mix, the part of it that is renewable, and the uptake of fuels that are certified as sustainable according to internationally agreed criteria (currently only defined for aviation). All three are shown as a percentage of the relevant total.
 
-### Description: useful energy
+### Description: final energy, signatory countries
 
-> **Note**: as above, when Useful energy is selected. Confirmed.
+> **Note**: as above, when Final energy and Signatory countries are selected. For now the same as for Global; change it if the signatory countries need a different description.
+
+The lines show three indicators of how transport’s final energy mix is changing over time. They track the role of electricity in the transport energy mix, the part of it that is renewable, and the uptake of fuels that are certified as sustainable according to internationally agreed criteria (currently only defined for aviation). All three are shown as a percentage of the relevant total.
+
+### Description: useful energy, global
+
+> **Note**: as above, when Useful energy and Global are selected.
+
+The lines show three indicators of how transport’s useful energy mix is changing over time. They track the role of electricity in the transport energy mix, the part of it that is renewable, and the uptake of fuels that are certified as sustainable according to internationally agreed criteria (currently only defined for aviation). All three are shown as a percentage of the relevant total. Higher shares of electricity, in comparison with final energy shares, reflect better conversion efficiency for electric powertrains in comparison with combustion.
+
+### Description: useful energy, signatory countries
+
+> **Note**: as above, when Useful energy and Signatory countries are selected. For now the same as for Global.
 
 The lines show three indicators of how transport’s useful energy mix is changing over time. They track the role of electricity in the transport energy mix, the part of it that is renewable, and the uptake of fuels that are certified as sustainable according to internationally agreed criteria (currently only defined for aviation). All three are shown as a percentage of the relevant total. Higher shares of electricity, in comparison with final energy shares, reflect better conversion efficiency for electric powertrains in comparison with combustion.
 
 ## About
 
-> **Note**: a section at the bottom of the page. The list of organisations isn't confirmed yet. Draft, 1 paragraph; more paragraphs can be added.
+> **Note**: a section at the bottom of the page.
 
 This tracker is developed by Climate Compatible Growth (CCG), the Institute of Transportation Studies at the University of California, Davis (ITS Davis), the Deutsche Gesellschaft für Internationale Zusammenarbeit (GIZ) and the University of Strathclyde. It is published on the Transport Data Commons, where the [underlying data](https://portal.transport-data.org/@uc-davis/tracking-the-global-transport-effort) can be downloaded.
 
 ## Sources
 
-> **Note**: a numbered list under About. For each source, give the citation, a link if there is one, and what it was used for. Confirmed.
+> **Note**: a numbered list under About. For each source, give the citation, a link if there is one, and what it was used for.
 
 1. International Energy Agency (IEA), World energy balances (2025)
    - Link: https://www.iea.org/data-and-statistics/data-product/world-energy-balances

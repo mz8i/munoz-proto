@@ -1,4 +1,4 @@
-import { max, range } from "d3-array"
+import { max, range, ticks, tickStep } from "d3-array"
 import {
   Area,
   CartesianGrid,
@@ -36,7 +36,7 @@ import {
   type ChartConfig,
 } from "@/components/ui/chart"
 import { readSeries, seriesKey } from "@/data/dataset"
-import type { Variable } from "@/data/schema"
+import { REGIONS, type Region, type Variable } from "@/data/schema"
 
 /** Stacked areas, in order from bottom to top. */
 const AREA_STYLES: { name: Variable<"energy">; color: string }[] = [
@@ -55,7 +55,7 @@ const LINE_STYLES: {
   color: string
   dashed: boolean
 }[] = [
-  { name: "Renewable (target)", color: EXCEL_GREENS[0], dashed: true },
+  { name: "Renewables (target)", color: EXCEL_GREENS[0], dashed: true },
   { name: "Renewables (historical)", color: EXCEL_GREENS[0], dashed: false },
   { name: "Total (target)", color: "#000000", dashed: true },
   { name: "Total (historical)", color: EXCEL_PURPLE, dashed: false },
@@ -74,7 +74,7 @@ const COMPARISONS: {
   },
   {
     label: "Renewables",
-    target: "Renewable (target)",
+    target: "Renewables (target)",
     historical: "Renewables (historical)",
   },
 ]
@@ -93,7 +93,8 @@ const MARKER_LABEL_YEARS = 15
 const MARKER_LABEL_PADDING = 6
 
 const X_TICK_STEP = 5
-const Y_STEP = 20
+/** Roughly how many steps the y-axis is divided into. */
+const Y_TICK_COUNT = 7
 
 /** Chart titles. */
 export const ENERGY_CHART_TITLES: Record<EnergyType, string> = {
@@ -107,10 +108,10 @@ const Y_AXIS_LABELS: Record<EnergyType, string> = {
   useful: "Useful energy consumption [EJ]",
 }
 
-/** Prepares one energy type for the chart: series keys, chart config and data maximum. */
-function prepareChart(energyType: EnergyType) {
+/** Prepares one region and energy type for the chart: series keys, chart config and data maximum. */
+function prepareChart(region: Region, energyType: EnergyType) {
   const yAxisLabel = Y_AXIS_LABELS[energyType]
-  const sheet = readSeries("energy", energyType)
+  const sheet = readSeries("energy", energyType, region)
   const areas = AREA_STYLES.map((s) => ({
     ...s,
     key: seriesKey(sheet, s.name),
@@ -175,19 +176,42 @@ function prepareChart(energyType: EnergyType) {
   }
 }
 
-const CHARTS: Record<EnergyType, ReturnType<typeof prepareChart>> = {
-  final: prepareChart("final"),
-  useful: prepareChart("useful"),
-}
+/**
+ * The charts for each region, with a y-axis range shared by its energy types,
+ * so that switching between final and useful energy keeps the scale. Regions
+ * differ too much in size to share one.
+ */
+const CHARTS = Object.fromEntries(
+  (Object.keys(REGIONS) as Region[]).map((region) => {
+    const charts = {
+      final: prepareChart(region, "final"),
+      useful: prepareChart(region, "useful"),
+    }
+    const dataMax = max(Object.values(charts), (c) => c.dataMax) ?? 0
+    const step = tickStep(0, dataMax, Y_TICK_COUNT)
+    const yMax = Math.ceil(dataMax / step) * step
+    // d3's ticks avoid the rounding errors of adding up decimal steps
+    const yTicks = ticks(0, yMax, Math.round(yMax / step))
+    return [region, { charts, yMax, yTicks }]
+  })
+) as Record<
+  Region,
+  {
+    charts: Record<EnergyType, ReturnType<typeof prepareChart>>
+    yMax: number
+    yTicks: number[]
+  }
+>
 
-// The y-axis range is shared by all charts, so switching between them keeps the scale
-const Y_MAX =
-  Math.ceil((max(Object.values(CHARTS), (c) => c.dataMax) ?? 0) / Y_STEP) *
-  Y_STEP
-const Y_TICKS = range(0, Y_MAX + 1, Y_STEP)
-
-export function EnergyChart({ energyType }: { energyType: EnergyType }) {
-  const chart = CHARTS[energyType]
+export function EnergyChart({
+  region,
+  energyType,
+}: {
+  region: Region
+  energyType: EnergyType
+}) {
+  const { charts, yMax, yTicks } = CHARTS[region]
+  const chart = charts[energyType]
 
   return (
     <div className="flex flex-col gap-4">
@@ -202,8 +226,8 @@ export function EnergyChart({ energyType }: { energyType: EnergyType }) {
             tickLine={false}
           />
           <YAxis
-            domain={[0, Y_MAX]}
-            ticks={Y_TICKS}
+            domain={[0, yMax]}
+            ticks={yTicks}
             tickLine={false}
             label={{
               value: chart.yAxisLabel,

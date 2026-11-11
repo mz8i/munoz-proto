@@ -1,4 +1,4 @@
-import { max, range } from "d3-array"
+import { max, range, ticks, tickStep } from "d3-array"
 import { CartesianGrid, LineChart, Line, XAxis, YAxis } from "recharts"
 
 import {
@@ -19,7 +19,7 @@ import {
   type ChartConfig,
 } from "@/components/ui/chart"
 import { readSeries, seriesKey } from "@/data/dataset"
-import type { Variable } from "@/data/schema"
+import { REGIONS, type Region, type Variable } from "@/data/schema"
 
 const LINE_STYLES: { name: Variable<"shares">; color: string }[] = [
   {
@@ -34,8 +34,8 @@ const LINE_STYLES: { name: Variable<"shares">; color: string }[] = [
 ]
 
 const X_TICK_STEP = 2
-/** In percentage points. */
-const Y_STEP = 0.5
+/** Roughly how many steps the y-axis is divided into. */
+const Y_TICK_COUNT = 7
 
 /** Chart titles. */
 export const SHARES_CHART_TITLES: Record<EnergyType, string> = {
@@ -43,10 +43,10 @@ export const SHARES_CHART_TITLES: Record<EnergyType, string> = {
   useful: "Shares of useful energy",
 }
 
-/** Prepares one energy type for the chart: series keys, chart config and axis scales. */
-function prepareChart(energyType: EnergyType) {
+/** Prepares one region and energy type for the chart: series keys, chart config and axis scales. */
+function prepareChart(region: Region, energyType: EnergyType) {
   const title = SHARES_CHART_TITLES[energyType]
-  const sheet = readSeries("shares", energyType)
+  const sheet = readSeries("shares", energyType, region)
   const lines = LINE_STYLES.map((s) => ({
     ...s,
     key: seriesKey(sheet, s.name),
@@ -67,8 +67,10 @@ function prepareChart(energyType: EnergyType) {
   })
 
   const dataMax = max(rows, (row) => max(lines, (s) => row[s.key] ?? 0)) ?? 0
-  const yMax = Math.ceil(dataMax / Y_STEP) * Y_STEP
-  const yTicks = range(0, yMax + Y_STEP / 2, Y_STEP)
+  const yStep = tickStep(0, dataMax, Y_TICK_COUNT)
+  const yMax = Math.ceil(dataMax / yStep) * yStep
+  // d3's ticks avoid the rounding errors of adding up decimal steps
+  const yTicks = ticks(0, yMax, Math.round(yMax / yStep))
 
   const xDomain = [sheet.years[0], sheet.years[sheet.years.length - 1]]
   const xTicks = range(xDomain[0], xDomain[1] + 1, X_TICK_STEP)
@@ -76,13 +78,24 @@ function prepareChart(energyType: EnergyType) {
   return { title, rows, lines, config, yMax, yTicks, xDomain, xTicks }
 }
 
-const CHARTS: Record<EnergyType, ReturnType<typeof prepareChart>> = {
-  final: prepareChart("final"),
-  useful: prepareChart("useful"),
-}
+const CHARTS = Object.fromEntries(
+  (Object.keys(REGIONS) as Region[]).map((region) => [
+    region,
+    {
+      final: prepareChart(region, "final"),
+      useful: prepareChart(region, "useful"),
+    },
+  ])
+) as Record<Region, Record<EnergyType, ReturnType<typeof prepareChart>>>
 
-export function SharesChart({ energyType }: { energyType: EnergyType }) {
-  const chart = CHARTS[energyType]
+export function SharesChart({
+  region,
+  energyType,
+}: {
+  region: Region
+  energyType: EnergyType
+}) {
+  const chart = CHARTS[region][energyType]
 
   return (
     <div className="flex flex-col gap-4">
