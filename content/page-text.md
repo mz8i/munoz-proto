@@ -115,7 +115,7 @@ The lines show three indicators of how transport’s useful energy mix is changi
 
 > **Note**: a section at the bottom of the page. The list of organisations isn't confirmed yet. Draft, 1 paragraph; more paragraphs can be added.
 
-This tracker is developed by Climate Compatible Growth (CCG), the Institute of Transportation Studies at the University of California, Davis (ITS Davis), the Deutsche Gesellschaft für Internationale Zusammenarbeit (GIZ) and the University of Strathclyde. It is published on the Transport Data Commons, where the underlying data can be downloaded.
+This tracker is developed by Climate Compatible Growth (CCG), the Institute of Transportation Studies at the University of California, Davis (ITS Davis), the Deutsche Gesellschaft für Internationale Zusammenarbeit (GIZ) and the University of Strathclyde. It is published on the Transport Data Commons, where the [underlying data](https://portal.transport-data.org/@uc-davis/tracking-the-global-transport-effort) can be downloaded.
 
 ## Sources
 

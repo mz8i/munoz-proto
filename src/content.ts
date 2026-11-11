@@ -46,9 +46,16 @@ export const CHART_DESCRIPTIONS: Record<
   },
 }
 
-/** Who develops the tracker; the list of organisations isn't confirmed yet. */
+/** The dataset behind the tracker, on the Transport Data Commons portal. */
+export const DATASET_URL =
+  "https://portal.transport-data.org/@uc-davis/tracking-the-global-transport-effort"
+
+/**
+ * Who develops the tracker; the list of organisations isn't confirmed yet.
+ * Links are written as [text](url).
+ */
 export const ABOUT: string[] = [
-  "This tracker is developed by Climate Compatible Growth (CCG), the Institute of Transportation Studies at the University of California, Davis (ITS Davis), the Deutsche Gesellschaft für Internationale Zusammenarbeit (GIZ) and the University of Strathclyde. It is published on the Transport Data Commons, where the underlying data can be downloaded.",
+  `This tracker is developed by Climate Compatible Growth (CCG), the Institute of Transportation Studies at the University of California, Davis (ITS Davis), the Deutsche Gesellschaft für Internationale Zusammenarbeit (GIZ) and the University of Strathclyde. It is published on the Transport Data Commons, where the [underlying data](${DATASET_URL}) can be downloaded.`,
 ]
 
 /** Sources of the data shown in the charts. */

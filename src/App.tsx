@@ -114,13 +114,38 @@ function About() {
         <h2 className={SECTION_HEADING_CLASS}>About</h2>
         {ABOUT.map((text) => (
           <p key={text} className="leading-7">
-            {text}
+            {withLinks(text)}
           </p>
         ))}
       </div>
       <Sources />
     </footer>
   )
+}
+
+/**
+ * Turns [text](url) in the page text into links. They open in a new tab, as
+ * the page is also embedded in the TDC portal, where a link would otherwise
+ * open inside the frame.
+ */
+function withLinks(text: string) {
+  // Splits into plain text, then link text and url, then plain text, and so on
+  const parts = text.split(/\[([^\]]+)\]\(([^)]+)\)/)
+  return parts.map((part, i) => {
+    if (i % 3 === 0) return part
+    if (i % 3 === 2) return null
+    return (
+      <a
+        key={i}
+        href={parts[i + 1]}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="text-tdc-teal-500 underline underline-offset-4 hover:text-muted-foreground"
+      >
+        {part}
+      </a>
+    )
+  })
 }
 
 function Sources() {
