@@ -36,6 +36,7 @@ import {
   type ChartConfig,
 } from "@/components/ui/chart"
 import { readSeries, seriesKey } from "@/data/dataset"
+import { useTooltipPortal } from "@/lib/use-tooltip-portal"
 import { REGIONS, type Region, type Variable } from "@/data/schema"
 
 /** Stacked areas, in order from bottom to top. */
@@ -216,6 +217,7 @@ export function EnergyChart({
 }) {
   const { charts, yMax, yTicks } = CHARTS[region]
   const chart = charts[energyType]
+  const [tooltipPortal, setTooltipContainer] = useTooltipPortal()
 
   return (
     <div className="flex flex-col gap-4">
@@ -245,6 +247,7 @@ export function EnergyChart({
           />
           <ChartTooltip
             wrapperStyle={TOOLTIP_WRAPPER_STYLE}
+            portal={tooltipPortal}
             content={
               <EnergyTooltip
                 comparisons={chart.comparisons}
@@ -306,6 +309,11 @@ export function EnergyChart({
           ))}
         </ComposedChart>
       </ChartContainer>
+      {/* The tooltip on narrow screens; it cancels the gap above while empty */}
+      <div
+        ref={setTooltipContainer}
+        className="-mt-4 has-[>.recharts-tooltip-wrapper>*]:mt-0 sm:hidden"
+      />
       <SeriesLegend areas={chart.areas} lines={chart.lines} />
     </div>
   )

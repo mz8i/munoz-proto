@@ -20,6 +20,7 @@ import {
 } from "@/components/ui/chart"
 import { SHARES_SERIES_LABELS } from "@/content"
 import { readSeries, seriesKey } from "@/data/dataset"
+import { useTooltipPortal } from "@/lib/use-tooltip-portal"
 import { REGIONS, type Region, type Variable } from "@/data/schema"
 
 const LINE_STYLES: { name: Variable<"shares">; color: string }[] = [
@@ -99,6 +100,7 @@ export function SharesChart({
   energyType: EnergyType
 }) {
   const chart = CHARTS[region][energyType]
+  const [tooltipPortal, setTooltipContainer] = useTooltipPortal()
 
   return (
     <div className="flex flex-col gap-4">
@@ -129,6 +131,7 @@ export function SharesChart({
           />
           <ChartTooltip
             wrapperStyle={TOOLTIP_WRAPPER_STYLE}
+            portal={tooltipPortal}
             content={<SharesTooltip lines={chart.lines} />}
           />
           {chart.lines.map((s) => (
@@ -145,6 +148,11 @@ export function SharesChart({
           ))}
         </LineChart>
       </ChartContainer>
+      {/* The tooltip on narrow screens; it cancels the gap above while empty */}
+      <div
+        ref={setTooltipContainer}
+        className="-mt-4 has-[>.recharts-tooltip-wrapper>*]:mt-0 sm:hidden"
+      />
       <SeriesLegend lines={chart.lines} />
     </div>
   )
