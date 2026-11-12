@@ -165,6 +165,9 @@ function Sources() {
             {source.url ? (
               <a
                 href={source.url}
+                // In a new tab, like the links in the text, as the page is also embedded
+                target="_blank"
+                rel="noopener noreferrer"
                 className="text-tdc-teal-500 underline underline-offset-4 hover:text-muted-foreground"
               >
                 {source.citation}
