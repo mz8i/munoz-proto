@@ -71,9 +71,9 @@ export const CHART_DESCRIPTIONS: Record<
     },
     signatories: {
       final:
-        "The stacked areas show final transport energy by carrier along the global IEA Net Zero Emissions by 2050 pathway, scaled using the 13 signatories’ combined 2022 energy use. The lines compare this illustrative benchmark with historical total and renewable energy use. The 2035 marker shows the scaled benchmark for the group.",
+        "The stacked areas show final transport energy by carrier along the global IEA Net Zero Emissions by 2050 pathway, scaled using the 13 signatories’ combined 2022 energy use. The lines compare this illustrative benchmark with historical total and renewable energy use.",
       useful:
-        "The stacked areas show final transport energy by carrier along the global IEA Net Zero Emissions by 2050 pathway, scaled using the 13 signatories’ combined 2022 energy use. Final energy is converted to useful energy using the GIZ methodology. The lines compare the scaled benchmark with historical estimates of total and renewable useful energy. The 2035 marker shows the scaled benchmark for the group.",
+        "The stacked areas show useful transport energy by carrier along the global IEA Net Zero Emissions by 2050 pathway, scaled using the 13 signatories’ combined 2022 energy use. Final energy is converted to useful energy using the GIZ methodology. The lines compare the scaled benchmark with historical estimates of total and renewable useful energy.",
     },
   },
   shares: {
@@ -171,7 +171,7 @@ export const SOURCES: { citation: string; url?: string; usedFor: string }[] = [
   {
     citation: "Norwegian Environment Agency, Biofuel sales statistics (2026)",
     url: "https://www.miljodirektoratet.no/aktuelt/fagmeldinger/2026/juni-2026/biodrivstoffet-i-norge-er-fra-85-land--kina-storst",
-    usedFor: "aviation biofuel sold in Norway in 2025",
+    usedFor: "Aviation biofuel sold in Norway in 2025",
   },
   {
     citation:
