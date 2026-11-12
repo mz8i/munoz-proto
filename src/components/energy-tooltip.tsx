@@ -104,7 +104,7 @@ function Figure({
       </div>
       <div className="flex min-h-5 items-center text-sm">
         {value == null ? (
-          <span className="text-[0.625rem] font-medium tracking-wider text-muted-foreground uppercase">
+          <span className="text-[0.625rem] font-medium tracking-wider text-caption uppercase">
             No data
           </span>
         ) : (
