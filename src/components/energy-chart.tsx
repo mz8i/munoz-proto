@@ -81,7 +81,9 @@ const COMPARISONS: {
 
 /**
  * Vertical lines marking key years. Where highlightTargets is set, the target
- * (dashed) lines get a dot where they cross the marker.
+ * (dashed) lines get a dot where they cross the marker. Only shown for the
+ * world, as the 2035 effort and the 2050 pathway are global goals: the
+ * researchers chose not to mark scaled versions of them for the signatories.
  */
 const YEAR_MARKERS = [
   { year: 2035, label: "2035 GTE Target", highlightTargets: true },
@@ -148,8 +150,10 @@ function prepareChart(region: Region, energyType: EnergyType) {
   const xDomain = [sheet.years[0], sheet.years[sheet.years.length - 1]]
   const xTicks = range(xDomain[0], xDomain[1] + 1, X_TICK_STEP)
 
-  const markerDots = YEAR_MARKERS.filter((m) => m.highlightTargets).flatMap(
-    (m) => {
+  const yearMarkers = region === "global" ? YEAR_MARKERS : []
+  const markerDots = yearMarkers
+    .filter((m) => m.highlightTargets)
+    .flatMap((m) => {
       const row = sheet.rows.find((r) => r.year === m.year)
       return lines
         .filter((s) => s.dashed && row?.[s.key] != null)
@@ -159,8 +163,7 @@ function prepareChart(region: Region, energyType: EnergyType) {
           value: row?.[s.key] ?? 0,
           color: s.color,
         }))
-    }
-  )
+    })
 
   return {
     yAxisLabel,
@@ -172,6 +175,7 @@ function prepareChart(region: Region, energyType: EnergyType) {
     dataMax,
     xDomain,
     xTicks,
+    yearMarkers,
     markerDots,
   }
 }
@@ -257,7 +261,7 @@ export function EnergyChart({
               isAnimationActive={false}
             />
           ))}
-          {YEAR_MARKERS.map((m) => (
+          {chart.yearMarkers.map((m) => (
             <ReferenceLine
               key={m.year}
               x={m.year}

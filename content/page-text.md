@@ -20,7 +20,7 @@ Declaration “Towards Resilient and Low-Emission Transport Systems for People, 
 
 > **Note**: shown below the subtitle.
 
-This tracker follows global progress in transport energy use against the pathway defined in the IEA’s Net Zero Roadmap (2023) to meet the Paris Agreement’s 1.5 °C goal. Based on this pathway, the Declaration sets out the Global Transport Effort for 2035. It has been signed by 11 countries: Austria, Brazil, Chile, Colombia, Costa Rica, the Dominican Republic, Honduras, Norway, Portugal, Slovenia and Spain. The tracker compares the latest historical data with this 2035 effort and the pathway’s 2050 values, for both the total energy consumed by transport and the share of it coming from renewable sources. The data is updated every year as new figures become available.
+This tracker follows global progress in transport energy use against the pathway defined in the IEA’s Net Zero Roadmap (2023) to meet the Paris Agreement’s 1.5 °C goal. Based on this pathway, the Declaration sets out the Global Transport Effort for 2035. The Declaration has been signed by 13 countries: Austria, Brazil, Chile, Colombia, Costa Rica, the Dominican Republic, Grenada, Honduras, Norway, Panama, Portugal, Slovenia and Spain. The tracker compares the latest historical data with this 2035 effort and the pathway’s 2050 values, for both the total energy consumed by transport and the share of it coming from renewable sources. The data is updated every year as new figures become available.
 
 ## Global Transport Effort definition
 
@@ -59,7 +59,7 @@ Global vs signatory countries
 
 Global shows transport energy use across all countries.
 
-Signatory countries shows the combined transport energy use of the countries that have signed the Declaration so far:
+The Signatory countries view shows combined transport energy use for the 13 current signatories.
 
 ### Signatory countries
 
@@ -71,12 +71,13 @@ Signatory countries shows the combined transport energy use of the countries tha
 - Colombia
 - Costa Rica
 - Dominican Republic
+- Grenada
 - Honduras
 - Norway
+- Panama
 - Portugal
 - Slovenia
 - Spain
-- [to be confirmed]
 
 ### Switch labels
 
@@ -102,7 +103,7 @@ The stacked areas show the IEA Net Zero pathway for transport’s final energy c
 
 > **Note**: as above, when Final energy and Signatory countries are selected. For now the same as for Global; change it if the signatory countries need a different description.
 
-The stacked areas show the IEA Net Zero pathway for transport’s final energy consumption by energy carrier, from 2010 to 2050. The lines compare the pathway for total and renewable energy with the historical figures reported so far, and the markers show the Global Transport Effort for 2035. The gap between the historical and pathway lines shows the distance still to cover to get on track.
+The stacked areas show final transport energy by carrier along the global IEA Net Zero Emissions by 2050 pathway, scaled using the 13 signatories’ combined 2022 energy use. The lines compare this illustrative benchmark with historical total and renewable energy use. The 2035 marker shows the scaled benchmark for the group.
 
 ### Description: useful energy, global
 
@@ -114,7 +115,7 @@ The stacked areas show transport’s useful energy consumption by energy carrier
 
 > **Note**: as above, when Useful energy and Signatory countries are selected. For now the same as for Global.
 
-The stacked areas show transport’s useful energy consumption by energy carrier, from 2010 to 2050, implied by the IEA Net Zero pathway, calculated following the methodology outlined in the GIZ report Tracking Global Progress on Cleaner Transport. The lines compare the pathway for total and renewable useful energy with historical estimates, and the markers show the Global Transport Effort for 2035. The gap between the historical and pathway lines shows the distance still to cover to get on track.
+The stacked areas show final transport energy by carrier along the global IEA Net Zero Emissions by 2050 pathway, scaled using the 13 signatories’ combined 2022 energy use. Final energy is converted to useful energy using the GIZ methodology. The lines compare the scaled benchmark with historical estimates of total and renewable useful energy. The 2035 marker shows the scaled benchmark for the group.
 
 ### Year markers
 
@@ -150,7 +151,7 @@ The lines show three indicators of how transport’s final energy mix is changin
 
 > **Note**: as above, when Final energy and Signatory countries are selected. For now the same as for Global; change it if the signatory countries need a different description.
 
-The lines show three indicators of how transport’s final energy mix is changing over time. They track the role of electricity in the transport energy mix, the part of it that is renewable, and the uptake of fuels that are certified as sustainable according to internationally agreed criteria (currently only defined for aviation). All three are shown as a percentage of the relevant total.
+The lines show three indicators of how transport’s final energy mix is changing over time. They track the role of electricity in the transport energy mix, the part of it that is renewable, and the uptake of fuels that are certified as sustainable according to internationally agreed criteria (currently only defined for aviation). All three are shown as a percentage of the relevant total. The SAF series uses ReFuelEU Aviation supply data and Norway’s national aviation biofuel sales. In 2025, 98% of the reported supply in the four EU signatories came from used cooking oil, which ICAO assigns zero default indirect land-use change emissions. CORSIA certification was not verified.
 
 ### Description: useful energy, global
 
@@ -162,7 +163,7 @@ The lines show three indicators of how transport’s useful energy mix is changi
 
 > **Note**: as above, when Useful energy and Signatory countries are selected. For now the same as for Global.
 
-The lines show three indicators of how transport’s useful energy mix is changing over time. They track the role of electricity in the transport energy mix, the part of it that is renewable, and the uptake of fuels that are certified as sustainable according to internationally agreed criteria (currently only defined for aviation). All three are shown as a percentage of the relevant total. Higher shares of electricity, in comparison with final energy shares, reflect better conversion efficiency for electric powertrains in comparison with combustion.
+The lines show three indicators of how transport’s useful energy mix is changing over time. They track the role of electricity in the transport energy mix, the part of it that is renewable, and the uptake of fuels that are certified as sustainable according to internationally agreed criteria (currently only defined for aviation). All three are shown as a percentage of the relevant total. The SAF series uses ReFuelEU Aviation supply data and Norway’s national aviation biofuel sales. In 2025, 98% of the reported supply in the four EU signatories came from used cooking oil, which ICAO assigns zero default indirect land-use change emissions. CORSIA certification was not verified. Higher shares of electricity, in comparison with final energy shares, reflect better conversion efficiency for electric powertrains in comparison with combustion.
 
 ## About
 
@@ -177,24 +178,33 @@ This tracker is developed by Climate Compatible Growth (CCG), the Institute of T
 1. International Energy Agency (IEA), World energy balances (2025)
    - Link: https://www.iea.org/data-and-statistics/data-product/world-energy-balances
    - Used for: Historical energy consumption and shares until 2023
-2. European Union 2026, European Commission, Joint Research Centre (JRC), EDGAR - Emissions Database for Global Atmospheric Research, Global Greenhouse Gas Emissions (2026)
+2. United Nations Statistics Division (UNSD), Energy Statistics Database
+   - https://unstats.un.org/unsd/energystats/data
+   - Historical transport fuel use, international aviation bunkers and electricity generation for Grenada, until 2023
+3. European Union 2026, European Commission, Joint Research Centre (JRC), EDGAR - Emissions Database for Global Atmospheric Research, Global Greenhouse Gas Emissions (2026)
    - Link: https://jeodpp.jrc.ec.europa.eu/ftp/jrc-opendata/EDGAR/datasets/EDGAR_2026_GHG/IEA_EDGAR_CO2_1970_2025.zip
    - Used for: Estimating 2023 to 2025 changes in transport fossil fuel demand
-3. EMBER, Yearly electricity data (2026)
+4. EMBER, Yearly electricity data (2026)
    - Link: https://ember-energy.org/data/yearly-electricity-data/
    - Used for: Data on electricity generation mix, 2023-25
-4. IEA, Global EV Data (2026)
+5. IEA, Global EV Data (2026)
    - Link: https://www.iea.org/data-and-statistics/data-product/global-ev-outlook-2026#global-ev-data
    - Used for: Informing electricity demand growth in transport, 2023-25, considering EV stock, 0.05 kWh/km and 6000 km/year for two-wheelers, 0.17 kWh/km and 12000 km/year for cars, 0.17 kWh/km and 20000 km/year for light commercial vehicles, 1 kWh/km and 60000 km/year for buses and trucks, and 33% all-electric driving for PHEVs
-5. IEA, Global Hydrogen Review 2026 (2026)
+6. IEA, Global Hydrogen Review 2026 (2026)
    - Link: https://www.iea.org/reports/global-hydrogen-review-2026
    - Used for: Informing transport hydrogen demand
-6. OECD/FAO, OECD-FAO Agricultural Outlook 2026-2035 (2026)
+7. OECD/FAO, OECD-FAO Agricultural Outlook 2026-2035 (2026)
    - Link: https://doi.org/10.1787/47874669-en
-   - Used for: Informing biofuel demand growth, 2023-25
-7. ICAO, ICAO tracker of CORSIA Certified Fuels and Economic operators (2026)
-   - Link: https://www.icao.int/CORSIA/corsia-certified-fuels
-   - Used for: CORSIA eligible fuels production data
-8. GIZ, Tracking Global Progress on Cleaner Transport (2026)
-   - Link: https://changing-transport.org/publications/tracking-global-progress-on-cleaner-transport/
-   - Used for: Final to useful energy conversion methodology and other methodological considerations
+   - Used for: Informing biofuel demand growth, 2023-25, supplemented by Eurostat and national energy statistics and fuel sales for the signatory-country estimates
+8. European Union Aviation Safety Agency (EASA), ReFuelEU Aviation Annual Technical Report (2026)
+   - Link: https://www.easa.europa.eu/en/document-library/general-publications/refueleu-aviation-annual-technical-report-2026
+   - Used for: SAF use by signatory-countries
+9. Norwegian Environment Agency, Biofuel sales statistics (2026)
+   - Link: https://www.miljodirektoratet.no/aktuelt/fagmeldinger/2026/juni-2026/biodrivstoffet-i-norge-er-fra-85-land--kina-storst
+   - Used for: aviation biofuel sold in Norway in 2025
+10. ICAO, ICAO tracker of CORSIA Certified Fuels and Economic operators (2026)
+    - Link: https://www.icao.int/CORSIA/corsia-certified-fuels
+    - Used for: CORSIA eligible fuels production data
+11. GIZ, Tracking Global Progress on Cleaner Transport (2026)
+    - Link: https://changing-transport.org/publications/tracking-global-progress-on-cleaner-transport/
+    - Used for: Final to useful energy conversion methodology and other methodological considerations

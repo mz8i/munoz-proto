@@ -18,6 +18,7 @@ import {
   ChartTooltip,
   type ChartConfig,
 } from "@/components/ui/chart"
+import { SHARES_SERIES_LABELS } from "@/content"
 import { readSeries, seriesKey } from "@/data/dataset"
 import { REGIONS, type Region, type Variable } from "@/data/schema"
 
@@ -50,6 +51,8 @@ function prepareChart(region: Region, energyType: EnergyType) {
   const lines = LINE_STYLES.map((s) => ({
     ...s,
     key: seriesKey(sheet, s.name),
+    // Shown in the legend and tooltip
+    name: SHARES_SERIES_LABELS[region][s.name] ?? s.name,
   }))
 
   const config = Object.fromEntries(
