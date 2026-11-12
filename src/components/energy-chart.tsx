@@ -219,7 +219,10 @@ export function EnergyChart({
 
   return (
     <div className="flex flex-col gap-4">
-      <ChartContainer config={chart.config} className="aspect-[3/2]">
+      <ChartContainer
+        config={chart.config}
+        className="aspect-[3/2] sm:aspect-[12/7]"
+      >
         <ComposedChart data={chart.rows} margin={CHART_MARGIN}>
           <CartesianGrid stroke={GRID_COLOR} />
           <XAxis
