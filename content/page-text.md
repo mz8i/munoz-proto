@@ -4,6 +4,24 @@ All the text on the tracker page, in the order it appears. Edit the text under e
 
 Series names in the chart legends and tooltips (e.g. "Oil", "Total (target)") come from the data file, so they're not listed here.
 
+## Link previews
+
+> **Note**: shown when a link to the tracker is shared on social media or in chat apps, with the preview image. The title is the page heading, below. The image shows the page heading, the subtitle, the TDC and Global Transport Effort logos, and the energy consumption chart (Global, final energy).
+
+### Description
+
+This tracker follows global progress in transport energy use against the pathway defined in the IEA’s Net Zero Roadmap (2023) to meet the Paris Agreement’s 1.5 °C goal.
+
+### Image description
+
+> **Note**: read out by screen readers in place of the image.
+
+Tracking the Global Transport Effort: a chart of transport’s final energy consumption from 2010 to 2050, with the TDC and Global Transport Effort logos.
+
+### Site name
+
+Transport Data Commons
+
 ## Page heading
 
 > **Note**: the main heading at the top of the page, also used as the title of the browser tab.

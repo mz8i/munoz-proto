@@ -1,4 +1,5 @@
-import type { EnergyType, Region, Variable } from "@/data/schema"
+// Relative, as vite.config.ts imports this file too and doesn't know the @ alias
+import type { EnergyType, Region, Variable } from "./data/schema.ts"
 
 /**
  * The page's text, kept apart from the layout so the wording can be updated
@@ -12,6 +13,19 @@ import type { EnergyType, Region, Variable } from "@/data/schema"
 export const PAGE_TITLE = "Tracking the Global Transport Effort"
 export const PAGE_SUBTITLE =
   "Declaration “Towards Resilient and Low-Emission Transport Systems for People, Development and the Planet”"
+
+/**
+ * Shown when a link to the page is shared, e.g. on social media or in chat
+ * apps. The title is PAGE_TITLE. Filled into index.html when the site is built.
+ */
+export const LINK_PREVIEW = {
+  description:
+    "This tracker follows global progress in transport energy use against the pathway defined in the IEA’s Net Zero Roadmap (2023) to meet the Paris Agreement’s 1.5 °C goal.",
+  /** Describes the preview image, public/og-image.png, for screen readers. */
+  imageDescription:
+    "Tracking the Global Transport Effort: a chart of transport’s final energy consumption from 2010 to 2050, with the TDC and Global Transport Effort logos.",
+  siteName: "Transport Data Commons",
+}
 
 export const INTRO: string[] = [
   "This tracker follows global progress in transport energy use against the pathway defined in the IEA’s Net Zero Roadmap (2023) to meet the Paris Agreement’s 1.5 °C goal. Based on this pathway, the Declaration sets out the Global Transport Effort for 2035. The Declaration has been signed by 13 countries: Austria, Brazil, Chile, Colombia, Costa Rica, the Dominican Republic, Grenada, Honduras, Norway, Panama, Portugal, Slovenia and Spain. The tracker compares the latest historical data with this 2035 effort and the pathway’s 2050 values, for both the total energy consumed by transport and the share of it coming from renewable sources. The data is updated every year as new figures become available.",

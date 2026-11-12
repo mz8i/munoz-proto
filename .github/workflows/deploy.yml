@@ -30,6 +30,8 @@ jobs:
         env:
           # e.g. /<repo-name>, or empty with a custom domain
           BASE_PATH: ${{ steps.pages.outputs.base_path }}
+          # The full address, for the link preview tags
+          SITE_URL: ${{ steps.pages.outputs.base_url }}
       - uses: actions/upload-pages-artifact@v5
         with:
           path: dist
